@@ -18,7 +18,9 @@ function SummaryCard({ title, before, after, value, format }) {
         return (
             <div className="summary-card">
                 <h3>{title}</h3>
-                <div className="value positive">{formatValue(value, format)}</div>
+                <div className="value positive" style={{ animation: 'slideInDown 0.6s ease-out' }}>
+                    {formatValue(value, format)}
+                </div>
             </div>
         )
     }
@@ -29,9 +31,11 @@ function SummaryCard({ title, before, after, value, format }) {
     return (
         <div className="summary-card">
             <h3>{title}</h3>
-            <div className="value">{formatValue(after, format)}</div>
-            <div className={`delta ${deltaClass}`}>
-                {delta >= 0 ? '▲' : '▼'} {formatValue(Math.abs(delta), format)} from {formatValue(before, format)}
+            <div className="value" style={{ animation: 'slideInDown 0.6s ease-out' }}>
+                {formatValue(after, format)}
+            </div>
+            <div className={`delta ${deltaClass}`} style={{ animation: 'fadeInUp 0.8s ease-out 0.2s both' }}>
+                <span style={{ fontSize: '1.2rem' }}>{delta >= 0 ? '▲' : '▼'}</span> {formatValue(Math.abs(delta), format)} from {formatValue(before, format)}
             </div>
         </div>
     )

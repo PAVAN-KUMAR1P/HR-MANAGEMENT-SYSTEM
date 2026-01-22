@@ -15,10 +15,11 @@ def evaluate_system(teams, rf_model, scaler, feature_order, bottleneck_aware=Tru
         bottleneck_aware: if True, apply bottleneck penalty
     
     Returns:
-        dict with total_completion_rate and total_output
+        dict with total_completion_rate, total_output, and team_metrics
     """
     total_predicted_output = 0
     total_target = 0
+    team_metrics = []
     
     for team in teams:
         features = build_team_features(team)
@@ -44,6 +45,12 @@ def evaluate_system(teams, rf_model, scaler, feature_order, bottleneck_aware=Tru
         
         predicted_output = effective_rate * team['daily_target']
         
+        team_metrics.append({
+            'completion_rate': effective_rate,
+            'output': predicted_output,
+            'target': team['daily_target']
+        })
+        
         total_predicted_output += predicted_output
         total_target += team['daily_target']
     
@@ -52,5 +59,6 @@ def evaluate_system(teams, rf_model, scaler, feature_order, bottleneck_aware=Tru
     return {
         'total_completion_rate': total_completion_rate,
         'total_output': total_predicted_output,
-        'total_target': total_target
+        'total_target': total_target,
+        'team_metrics': team_metrics
     }

@@ -11,7 +11,8 @@ def optimize_worker_allocation(
     max_iterations=1000,
     temperature=2.0,
     cooling_rate=0.995,
-    bottleneck_aware=True
+    bottleneck_aware=True,
+    progress_callback=None
 ):
     """
     Optimize worker allocation with bottleneck awareness.
@@ -30,6 +31,7 @@ def optimize_worker_allocation(
         temperature: initial temperature for annealing
         cooling_rate: cooling schedule
         bottleneck_aware: enable bottleneck penalty
+        progress_callback: optional function(iteration, best_score) called each iteration
     
     Returns:
         dict with optimized teams and performance metrics
@@ -54,6 +56,10 @@ def optimize_worker_allocation(
     migration_log = {'cutting': 0, 'sewing': 0, 'finishing': 0}
     
     for iteration in range(max_iterations):
+        # Report progress every 5 iterations
+        if progress_callback and iteration % 5 == 0:
+            progress_callback(iteration + 1, best_score)
+        
         # Random migration attempt
         dept = np.random.choice(['cutting', 'sewing', 'finishing'])
         

@@ -1,101 +1,357 @@
-# Garment Production Optimizer
+# 🏭 Garment Production Optimizer
 
-ML-powered worker allocation system with bottleneck-aware optimization.
+<div align="center">
 
-## 🎯 Project Overview
+![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
 
-This system optimizes worker allocation across garment production teams using:
-- **Machine Learning**: Random Forest model for completion rate prediction
-- **Bottleneck Awareness**: Respects sequential workflow (Cutting → Sewing → Finishing)
-- **Smart Optimization**: Simulated Annealing algorithm for optimal worker distribution
-- **Real-Time Results**: Immediate visualization of optimization impact
+**An ML-powered worker allocation system with bottleneck-aware optimization for garment production lines.**
+
+[Features](#-features) •
+[Installation](#-installation) •
+[Usage](#-usage) •
+[API Documentation](#-api-documentation) •
+[Tech Stack](#-tech-stack)
+
+</div>
+
+---
+
+## 🎯 Overview
+
+The Garment Production Optimizer is an intelligent system designed to maximize production efficiency by optimally allocating workers across different production stages. It uses machine learning to predict completion rates and employs simulated annealing algorithms to find the best worker distribution.
+
+### Key Capabilities
+
+- **🤖 Machine Learning Prediction**: Random Forest model trained on production data to predict completion rates
+- **🔄 Bottleneck-Aware Optimization**: Respects the sequential workflow (Cutting → Sewing → Finishing)
+- **⚡ Smart Worker Allocation**: Simulated Annealing algorithm for optimal worker distribution
+- **📊 Real-Time Visualization**: Interactive charts showing optimization results and improvements
+- **📈 Performance Analytics**: Detailed metrics on production efficiency and worker utilization
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| **Team Input Management** | Add multiple production teams with worker counts and attendance data |
+| **Sample Data Loading** | Load sample teams from the included dataset for testing |
+| **Optimization Engine** | ML-based optimization with configurable number of iterations |
+| **Results Dashboard** | Comprehensive visualization of before/after optimization metrics |
+| **Bottleneck Analysis** | Identify and visualize production bottlenecks |
+| **Worker Migration Tracking** | Track recommended worker movements between stages |
+
+---
 
 ## 📁 Project Structure
 
 ```
 garment-optimization-system/
-├── backend/              # FastAPI backend
-│   ├── app/
-│   │   ├── main.py      # API endpoints
-│   │   ├── schemas.py   # Pydantic models
-│   │   ├── ml/          # ML modules
-│   │   │   ├── model_loader.py
-│   │   │   ├── feature_builder.py
-│   │   │   ├── evaluator.py
-│   │   │   └── optimizer.py
-│   │   └── utils/       # Utilities
-│   │       └── validators.py
-│   ├── artifacts/       # ML model files
-│   └── requirements.txt
 │
-├── frontend/            # React frontend
-│   ├── src/
-│   │   ├── pages/       # Route pages
-│   │   ├── components/  # Reusable components
-│   │   ├── services/    # API client
-│   │   ├── App.jsx
-│   │   └── main.jsx
+├── 📂 backend/                    # FastAPI Backend Service
+│   ├── 📂 app/
+│   │   ├── main.py               # API endpoints & server configuration
+│   │   ├── schemas.py            # Pydantic data models
+│   │   ├── 📂 ml/                # Machine Learning modules
+│   │   │   ├── model_loader.py   # Load ML artifacts
+│   │   │   ├── feature_builder.py# Feature engineering
+│   │   │   ├── evaluator.py      # Model evaluation
+│   │   │   └── optimizer.py      # Simulated annealing optimizer
+│   │   └── 📂 utils/
+│   │       └── validators.py     # Input validation
+│   ├── 📂 artifacts/             # ML model files (.pkl)
+│   ├── 📂 dataset/               # Training dataset
+│   └── requirements.txt          # Python dependencies
+│
+├── 📂 frontend/                   # React Frontend Application
+│   ├── 📂 src/
+│   │   ├── 📂 pages/             # Route pages
+│   │   │   ├── Home.jsx          # Landing page
+│   │   │   ├── InputTeams.jsx    # Team input form
+│   │   │   ├── Results.jsx       # Optimization results
+│   │   │   └── About.jsx         # About page
+│   │   ├── 📂 components/        # Reusable UI components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── TeamForm.jsx
+│   │   │   ├── TeamTable.jsx
+│   │   │   └── 📂 Charts/        # Visualization components
+│   │   ├── 📂 services/
+│   │   │   └── api.js            # API client
+│   │   ├── App.jsx               # Main app component
+│   │   └── main.jsx              # Entry point
 │   ├── index.html
-│   └── package.json
+│   ├── package.json
+│   └── vite.config.js
 │
-└── docs/
-    └── prd/             # Product requirements
+└── README.md
 ```
 
-## 🚀 Quick Start
+---
+
+## 🚀 Installation
+
+### Prerequisites
+
+- **Python** 3.9 or higher
+- **Node.js** 18 or higher
+- **npm** or **yarn**
 
 ### Backend Setup
 
-1. **Navigate to backend directory:**
+1. **Navigate to the backend directory:**
    ```bash
    cd backend
    ```
 
-2. **Create virtual environment:**
+2. **Create and activate a virtual environment:**
    ```bash
+   # Create virtual environment
    python -m venv venv
+
+   # Activate (Windows)
+   venv\Scripts\activate
+
+   # Activate (macOS/Linux)
+   source venv/bin/activate
    ```
 
-3. **Activate virtual environment:**
-   - Windows: `venv\Scripts\activate`
-   - Linux/Mac: `source venv/bin/activate`
-
-4. **Install dependencies:**
+3. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-5. **Ensure ML artifacts are in place:**
-   Place these files in `backend/artifacts/`:
-   - `rf_completion_model.pkl`
-   - `scaler.pkl`
-   - `feature_order.pkl`
+4. **Verify ML artifacts exist in `backend/artifacts/`:**
+   - `rf_completion_model.pkl` - Trained Random Forest model
+   - `scaler.pkl` - Feature scaler
+   - `feature_order.pkl` - Feature ordering metadata
 
-6. **Run the backend:**
+5. **Start the backend server:**
    ```bash
    uvicorn app.main:app --reload
    ```
 
-   Backend will be available at: **http://localhost:8000**
+   ✅ Backend running at: **http://localhost:8000**
 
 ### Frontend Setup
 
-1. **Navigate to frontend directory:**
+1. **Navigate to the frontend directory:**
    ```bash
    cd frontend
    ```
 
-2. **Install dependencies:**
+2. **Install Node.js dependencies:**
    ```bash
    npm install
    ```
 
-3. **Run the development server:**
+3. **Start the development server:**
    ```bash
    npm run dev
    ```
 
-   Frontend will be available at: **http://localhost:3000**
+   ✅ Frontend running at: **http://localhost:5173**
+
+---
+
+## 💻 Usage
+
+### Quick Start
+
+1. **Start both servers** (backend and frontend)
+2. **Open the application** at `http://localhost:5173`
+3. **Navigate to "Input Teams"** to add production teams
+4. **Enter team data** or click "Load Sample Data" for demo
+5. **Click "Optimize"** to run the ML optimization
+6. **View Results** with detailed charts and recommendations
+
+### Input Parameters
+
+| Parameter | Description | Range |
+|-----------|-------------|-------|
+| `total_workers` | Total workers in the team | 1-1000 |
+| `cutting_workers` | Workers in cutting stage | 1-500 |
+| `sewing_workers` | Workers in sewing stage | 1-500 |
+| `finishing_workers` | Workers in finishing stage | 1-500 |
+| `cutting_attendance` | Attendance % for cutting | 0-100 |
+| `sewing_attendance` | Attendance % for sewing | 0-100 |
+| `finishing_attendance` | Attendance % for finishing | 0-100 |
+| `daily_target` | Daily production target | 1-10000 |
+
+---
+
+## 📖 API Documentation
+
+### Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | API status and available endpoints |
+| `GET` | `/health` | Health check with model status |
+| `GET` | `/sample-data` | Get random sample teams from dataset |
+| `POST` | `/optimize` | Run optimization on provided teams |
+
+### Interactive Documentation
+
+Once the backend is running, access the interactive API docs:
+
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+### Example Request
+
+```bash
+curl -X POST "http://localhost:8000/optimize" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "teams": [
+      {
+        "total_workers": 50,
+        "cutting_workers": 15,
+        "sewing_workers": 20,
+        "finishing_workers": 15,
+        "cutting_attendance": 90,
+        "sewing_attendance": 85,
+        "finishing_attendance": 88,
+        "daily_target": 500
+      }
+    ],
+    "optimization_iterations": 100
+  }'
+```
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+- **FastAPI** - Modern, fast web framework for building APIs
+- **Pydantic** - Data validation using Python type annotations
+- **scikit-learn** - Machine learning library
+- **Pandas** - Data manipulation and analysis
+- **NumPy** - Numerical computing
+- **Uvicorn** - ASGI server
+
+### Frontend
+- **React 18** - UI library
+- **Vite** - Next-generation frontend tooling
+- **React Router** - Client-side routing
+
+### Machine Learning
+- **Random Forest Regressor** - Completion rate prediction
+- **Simulated Annealing** - Optimization algorithm
+- **Feature Engineering** - Bottleneck ratios, attendance normalization
+
+---
+
+## 🧪 Testing
+
+### Backend Tests
+```bash
+cd backend
+python -m pytest test_ml.py -v
+```
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `HOST` | `0.0.0.0` | Backend host |
+| `PORT` | `8000` | Backend port |
+| `RELOAD` | `true` | Hot reload for development |
+
+### Frontend Configuration
+
+Edit `frontend/vite.config.js` to customize:
+- Development server port
+- API proxy settings
+- Build output directory
+
+---
+
+## 📊 How It Works
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   User Input    │───▶│  Feature Build  │───▶│   ML Predict    │
+│   (Team Data)   │    │  (Bottlenecks)  │    │  (Completion)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                       │
+                                                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│    Results &    │◀───│   Evaluation    │◀───│   Optimization  │
+│  Visualization  │    │   & Metrics     │    │  (Sim Anneal)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+1. **Input**: User provides team worker distribution and attendance data
+2. **Feature Engineering**: Calculate bottleneck ratios and normalize features
+3. **ML Prediction**: Random Forest predicts completion rate
+4. **Optimization**: Simulated Annealing finds optimal worker allocation
+5. **Evaluation**: Compare before/after metrics
+6. **Visualization**: Display results with interactive charts
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📧 Support
+
+If you have any questions or run into issues, please open an issue on GitHub.
+
+---
+
+<div align="center">
+Made with ❤️ for optimizing garment production
+</div>
+
+---
+
+### **Running After First Setup**
+
+Once you've completed the first-time setup, you only need these commands:
+
+#### Start Backend
+```bash
+cd backend
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # Linux/Mac
+uvicorn app.main:app --reload
+```
+
+#### Start Frontend
+```bash
+cd frontend
+npm run dev
+```
+
+**Quick Access:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
 
 ## 📖 Usage
 

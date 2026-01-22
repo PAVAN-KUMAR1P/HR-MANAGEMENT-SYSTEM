@@ -19,13 +19,26 @@ function Results({ result }) {
         )
     }
 
-    const { initial, final, teams_before, teams_after, iterations, migrations, improvement_pct, gain, computation_time, migration_log } = result
+    const { 
+        initial, 
+        final, 
+        teams_before, 
+        teams_after, 
+        team_metrics_before = [],
+        team_metrics_after = [],
+        iterations, 
+        migrations, 
+        improvement_pct, 
+        gain, 
+        computation_time, 
+        migration_log 
+    } = result
 
     return (
         <div className="container">
             <div className="header">
                 <h1>✅ Optimization Complete</h1>
-                <p>Worker allocation has been optimized</p>
+                <p>Worker allocation has been optimized for maximum productivity</p>
             </div>
 
             <div className="summary-grid">
@@ -42,12 +55,12 @@ function Results({ result }) {
                     format="pieces"
                 />
                 <SummaryCard
-                    title="Improvement"
+                    title="Overall Improvement"
                     value={improvement_pct}
                     format="percent-change"
                 />
                 <SummaryCard
-                    title="Extra Pieces"
+                    title="Extra Production"
                     value={gain}
                     format="pieces-gain"
                 />
@@ -55,13 +68,13 @@ function Results({ result }) {
 
             <CompletionChart initial={initial} final={final} />
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
+            <div className="charts-grid">
                 <MigrationChart migration_log={migration_log} />
                 <BottleneckChart teams_before={teams_before} teams_after={teams_after} />
             </div>
 
             <div className="card">
-                <h3>Optimization Metrics</h3>
+                <h3>📈 Optimization Metrics</h3>
                 <table>
                     <tbody>
                         <tr>
@@ -93,13 +106,21 @@ function Results({ result }) {
             </div>
 
             <div className="card">
-                <h3>Team Comparison</h3>
-                <TeamTable teams_before={teams_before} teams_after={teams_after} />
+                <h3>👥 Team Comparison</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>
+                    View detailed before and after comparison for each team including performance metrics and attendance changes
+                </p>
+                <TeamTable 
+                    teams_before={teams_before} 
+                    teams_after={teams_after}
+                    team_metrics_before={team_metrics_before}
+                    team_metrics_after={team_metrics_after}
+                />
             </div>
 
-            <div className="card" style={{ textAlign: 'center' }}>
+            <div className="card" style={{ textAlign: 'center', background: 'linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 100%)' }}>
                 <Link to="/input" className="btn">
-                    ← Run Another Optimization
+                    ↺ Run Another Optimization
                 </Link>
             </div>
         </div>

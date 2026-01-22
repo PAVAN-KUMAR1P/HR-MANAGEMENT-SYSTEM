@@ -37,14 +37,35 @@ class PerformanceMetrics(BaseModel):
     total_output: float
     total_target: float
 
+class TeamMetrics(BaseModel):
+    completion_rate: float
+    output: float
+    target: float
+
 class OptimizationResponse(BaseModel):
     initial: PerformanceMetrics
     final: PerformanceMetrics
     teams_before: List[Dict]
     teams_after: List[Dict]
+    team_metrics_before: List[TeamMetrics] = []
+    team_metrics_after: List[TeamMetrics] = []
     iterations: int
     migrations: int
     improvement_pct: float
     gain: float
     computation_time: float
     migration_log: Dict[str, int]
+
+class SampleTeam(BaseModel):
+    total_workers: int
+    cutting_workers: int
+    sewing_workers: int
+    finishing_workers: int
+    cutting_attendance: int
+    sewing_attendance: int
+    finishing_attendance: int
+    daily_target: int
+
+class SampleDataResponse(BaseModel):
+    teams: List[SampleTeam]
+    total_rows: int
